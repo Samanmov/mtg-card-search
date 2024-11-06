@@ -9,6 +9,9 @@ import { CardContainer } from "../../../common/ui/container/CardContainer";
 import { Select } from "../../../common/ui/component/Select";
 import { ButtonToolbar } from "../../../common/ui/component/ButtonToolbar";
 import { FormValues } from "../model/FormValues";
+import { AppDispatch } from "../../../store";
+import { useDispatch } from "react-redux";
+import { fetchCards, setQuery } from "../actions/cardsActions";
 
 const initialValues: FormValues = {
   cardName: "",
@@ -20,6 +23,7 @@ const initialValues: FormValues = {
 };
 
 export const CardSearchFormContainer: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,6 +37,8 @@ export const CardSearchFormContainer: React.FC = () => {
       return errors;
     },
     onSubmit: (values) => {
+      dispatch(setQuery(values));
+      dispatch(fetchCards(values));
       navigate(Path.RESULTS);
     },
   });
