@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Path } from "../../../Path";
@@ -9,17 +9,17 @@ import { Button } from "../../../common/ui/component/Button";
 import { AppDispatch, RootState } from "../../../store";
 import { setQuery } from "../../cardSearch/actions/cardsActions";
 
-export const SearchResultsContainer: React.FC = () => {
+export const SearchResultsContainer: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { results, loading, error, query } = useSelector(
     (state: RootState) => state.cards,
   );
-  const memoizedQuery = React.useMemo(() => query, [query]);
+  const memoizedQuery = useMemo(() => query, [query]);
 
   const handleEditSearch = () => {
-    dispatch(setQuery(memoizedQuery)); // Use memoized query to ensure consistency
-    navigate(Path.SEARCH, { state: { ...memoizedQuery } }); // Pass the memoized query as state
+    dispatch(setQuery(memoizedQuery));
+    navigate(Path.SEARCH, { state: { ...memoizedQuery } });
   };
 
   if (loading) return <LoadingSpinner />;

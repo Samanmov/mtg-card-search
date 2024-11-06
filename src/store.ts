@@ -8,7 +8,6 @@ const rootReducer = combineReducers({
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-// Create the Redux store with thunk middleware
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export type AppDispatch = typeof store.dispatch;
