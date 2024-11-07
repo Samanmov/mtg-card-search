@@ -10,7 +10,8 @@ const initialState: CardsState = {
     power: "",
     toughness: "",
   },
-  results: [],
+  generatedCard: undefined,
+  similarCards: [],
   loading: false,
   error: null,
 };
@@ -35,7 +36,12 @@ export const cardsReducers = (
       return {
         ...state,
         loading: false,
-        results: action.payload,
+        generatedCard: action.payload,
+      };
+    case CardActionTypes.FETCH_RELATED_CARDS_SUCCESS:
+      return {
+        ...state,
+        similarCards: action.payload,
       };
     case CardActionTypes.FETCH_CARDS_FAILURE:
       return {

@@ -1,3 +1,5 @@
+import { Card } from "./Card";
+
 export interface CardsState {
   query: {
     cardName: string;
@@ -7,7 +9,8 @@ export interface CardsState {
     power: string;
     toughness: string;
   };
-  results: any[];
+  generatedCard: Card | undefined;
+  similarCards: Card[];
   loading: boolean;
   error: string | null;
 }
