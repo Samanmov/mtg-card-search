@@ -3,7 +3,7 @@ import { palette } from "../../model/palette";
 import { FC, PropsWithChildren } from "react";
 
 type MainContainerProps = PropsWithChildren & {
-  flexCenter?: boolean; // Determines if flex styling should be applied
+  flexCenter?: boolean;
 };
 
 const MainContainerStyle = styled.div<MainContainerProps>`
