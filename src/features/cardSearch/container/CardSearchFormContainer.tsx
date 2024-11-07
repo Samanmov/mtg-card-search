@@ -11,7 +11,11 @@ import { ButtonToolbar } from "../../../common/ui/component/ButtonToolbar";
 import { FormValues } from "../model/FormValues";
 import { AppDispatch } from "../../../store";
 import { useDispatch } from "react-redux";
-import { fetchCards, setQuery } from "../actions/cardsActions";
+import {
+  fetchCards,
+  fetchRelatedCardsSuccess,
+  setQuery,
+} from "../actions/cardsActions";
 import { RandomImageContainer } from "../../randomImage/container/RandomImageContainer";
 
 const initialValues: FormValues = {
@@ -40,6 +44,7 @@ export const CardSearchFormContainer: React.FC = () => {
     onSubmit: (values) => {
       dispatch(setQuery(values));
       dispatch(fetchCards(values));
+      dispatch(fetchRelatedCardsSuccess([]));
       navigate(Path.RESULTS);
     },
   });

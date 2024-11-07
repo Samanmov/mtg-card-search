@@ -2,7 +2,7 @@ import { ImageActionTypes } from "../model/ImageActionTypes";
 import { RandomImageState } from "../model/RandomImageState";
 
 const initialState: RandomImageState = {
-  imageUrl: null,
+  imageCard: null,
   loading: false,
   success: false,
   error: null,
@@ -37,7 +37,7 @@ export const randomImageReducers = (
     case ImageActionTypes.SET_RANDOM_IMAGE:
       return {
         ...state,
-        imageUrl: action.payload,
+        imageCard: action.payload,
         loading: false,
         success: true,
         error: null,

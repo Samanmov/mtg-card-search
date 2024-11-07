@@ -5,14 +5,13 @@ import { MainContainer } from "../../../common/ui/container/MainContainer";
 
 type Props = {
   onEditSearch: () => void;
-  error?: string | null;
 };
 
-export const NotFoundContainer: FC<Props> = ({ onEditSearch, error }) => {
+export const NotFoundContainer: FC<Props> = ({ onEditSearch }) => {
   return (
     <MainContainer>
       <CardContainer centerAlign>
-        <h2>{error ? `Error: ${error}` : "No Cards Found!"}</h2>
+        <h2>No Cards Found!</h2>
         <Button variant="primary" onClick={onEditSearch}>
           Edit Search
         </Button>
