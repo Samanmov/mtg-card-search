@@ -11,6 +11,7 @@ const initialState: CardsState = {
     toughness: "",
   },
   generatedCard: undefined,
+  colorPercentages: null,
   similarCards: [],
   loading: false,
   error: null,
@@ -48,6 +49,11 @@ export const cardsReducers = (
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case CardActionTypes.SET_COLOR_PERCENTAGES:
+      return {
+        ...state,
+        colorPercentages: action.payload,
       };
     default:
       return state;

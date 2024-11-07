@@ -8,13 +8,20 @@ import { LoadingSpinner } from "../../../common/ui/container/LoadingSpinner";
 import { Button } from "../../../common/ui/component/Button";
 import { AppDispatch, RootState } from "../../../store";
 import { setQuery } from "../../cardSearch/actions/cardsActions";
+import { Colors } from "../../cardSearch/model/Colors";
+import { ColorPercentageCircle } from "../../../common/ui/component/ColorPercentageCircle";
 
 export const SearchResultsContainer: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { generatedCard, similarCards, loading, error, query } = useSelector(
-    (state: RootState) => state.cards,
-  );
+  const {
+    generatedCard,
+    similarCards,
+    loading,
+    error,
+    query,
+    colorPercentages,
+  } = useSelector((state: RootState) => state.cards);
   const memoizedQuery = useMemo(() => query, [query]);
 
   const handleEditSearch = () => {
@@ -48,6 +55,18 @@ export const SearchResultsContainer: FC = () => {
             />
           )}
         </div>
+
+        {colorPercentages && Object.keys(colorPercentages).length > 0 && (
+          <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
+            {Object.entries(colorPercentages).map(([color, percentage]) => (
+              <ColorPercentageCircle
+                key={color}
+                color={color as Colors}
+                percentage={Math.round(percentage)}
+              />
+            ))}
+          </div>
+        )}
 
         {similarCards.length > 0 && (
           <div style={{ marginTop: "20px" }}>
