@@ -12,6 +12,7 @@ import { FormValues } from "../model/FormValues";
 import { AppDispatch } from "../../../store";
 import { useDispatch } from "react-redux";
 import { fetchCards, setQuery } from "../actions/cardsActions";
+import { RandomImageContainer } from "../../randomImage/container/RandomImageContainer";
 
 const initialValues: FormValues = {
   cardName: "",
@@ -81,6 +82,7 @@ export const CardSearchFormContainer: React.FC = () => {
             onBlur={formik.handleBlur}
             value={formik.values.cardCost}
           />
+          <RandomImageContainer />
           <Input
             type="text"
             name="description"
