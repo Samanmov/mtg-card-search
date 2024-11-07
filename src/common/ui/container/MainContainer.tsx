@@ -1,11 +1,30 @@
 import styled from "styled-components";
 import { palette } from "../../model/palette";
+import { FC, PropsWithChildren } from "react";
 
-export const MainContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+type MainContainerProps = PropsWithChildren & {
+  flexCenter?: boolean; // Determines if flex styling should be applied
+};
+
+const MainContainerStyle = styled.div<MainContainerProps>`
+  ${({ flexCenter }) =>
+    flexCenter &&
+    `
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 20px;
+  `}
   min-height: 100vh;
-  padding: 20px;
+
   background-color: ${palette.gray.light};
 `;
+
+export const MainContainer: FC<MainContainerProps> = ({
+  flexCenter = true,
+  children,
+}) => {
+  return (
+    <MainContainerStyle flexCenter={flexCenter}>{children}</MainContainerStyle>
+  );
+};

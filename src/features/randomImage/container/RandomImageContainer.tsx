@@ -4,19 +4,19 @@ import { Button } from "../../../common/ui/component/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
 import { fetchRandomImage } from "../actions/randomImageActions";
-import { SimpleSpinner } from "../../../common/ui/component/Spinner";
+import { ImageWithLoading } from "../../../common/ui/container/ImageWithPlaceholder";
 
 export const RandomImageContainer = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { imageUrl, loading, error } = useSelector(
+  const { imageCard, loading, error } = useSelector(
     (state: RootState) => state.randomImage,
   );
 
   useEffect(() => {
-    if (!imageUrl) {
+    if (!imageCard) {
       dispatch(fetchRandomImage());
     }
-  }, [dispatch, imageUrl]);
+  }, [dispatch, imageCard]);
 
   const handleNewImage = () => {
     dispatch(fetchRandomImage());
@@ -24,11 +24,17 @@ export const RandomImageContainer = () => {
 
   return (
     <>
-      {loading && <SimpleSpinner />}
-      {error && <p>Error: {error}</p>}
-      {imageUrl && (
+      {imageCard && (
         <ButtonToolbar>
-          <img src={imageUrl} alt="Random MTG Card" style={{ width: "50%" }} />
+          <ImageWithLoading
+            src={imageCard?.image_uris?.normal}
+            alt={imageCard.name}
+            width="218px"
+            height="303px"
+            isLoading={loading}
+            error={error}
+          />
+
           <Button variant="primary" type="button" onClick={handleNewImage}>
             New Image
           </Button>

@@ -1,15 +1,34 @@
 import React, { FC, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { Path } from "../../../Path";
 import { NotFoundContainer } from "./NotFoundContainer";
-import { MainContainer } from "../../../common/ui/container/MainContainer";
 import { LoadingSpinner } from "../../../common/ui/container/LoadingSpinner";
 import { Button } from "../../../common/ui/component/Button";
 import { AppDispatch, RootState } from "../../../store";
 import { setQuery } from "../../cardSearch/actions/cardsActions";
 import { Colors } from "../../cardSearch/model/Colors";
 import { ColorPercentageCircle } from "../../../common/ui/component/ColorPercentageCircle";
+import { CardContent } from "../../../common/ui/component/CardContent";
+import { CardNavigator } from "../../../common/ui/component/CardNavigator";
+import { MainContainer } from "../../../common/ui/container/MainContainer";
+
+const CardSection = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
+const ColorPercentageSection = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const SearchResultsContainer: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -31,66 +50,43 @@ export const SearchResultsContainer: FC = () => {
 
   if (loading) return <LoadingSpinner />;
   if (error || (!generatedCard && similarCards.length === 0)) {
-    return <NotFoundContainer onEditSearch={handleEditSearch} error={error} />;
+    return <NotFoundContainer onEditSearch={handleEditSearch} />;
   }
 
   return (
-    <MainContainer>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <h2>Generated Card</h2>
-        <div>
-          <h3>{generatedCard?.name}</h3>
-          <p>{generatedCard?.type_line}</p>
-          {generatedCard?.image_uris?.normal && (
-            <img
-              src={generatedCard.image_uris.normal}
-              alt={generatedCard.name}
-              style={{ width: "50%" }}
+    <MainContainer flexCenter={false}>
+      <CardSection>
+        <CardContent
+          name={generatedCard?.name}
+          isLoading={loading}
+          type={generatedCard?.type_line}
+          title="Generated Card"
+          src={generatedCard?.image_uris?.normal ?? ""}
+          action={
+            <Button variant="primary" onClick={handleEditSearch}>
+              Edit Search
+            </Button>
+          }
+        />
+
+        <CardNavigator
+          title="Similar Cards"
+          similarCards={similarCards}
+          loading={loading}
+        />
+      </CardSection>
+
+      {colorPercentages && Object.keys(colorPercentages).length > 0 && (
+        <ColorPercentageSection>
+          {Object.entries(colorPercentages).map(([color, percentage]) => (
+            <ColorPercentageCircle
+              key={color}
+              color={color as Colors}
+              percentage={Math.round(percentage)}
             />
-          )}
-        </div>
-
-        {colorPercentages && Object.keys(colorPercentages).length > 0 && (
-          <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
-            {Object.entries(colorPercentages).map(([color, percentage]) => (
-              <ColorPercentageCircle
-                key={color}
-                color={color as Colors}
-                percentage={Math.round(percentage)}
-              />
-            ))}
-          </div>
-        )}
-
-        {similarCards.length > 0 && (
-          <div style={{ marginTop: "20px" }}>
-            <h2>Similar Cards</h2>
-            {similarCards.map((card) => (
-              <div key={card.id} style={{ marginBottom: "10px" }}>
-                <h3>{card.name}</h3>
-                <p>{card.type_line}</p>
-                {card.image_uris?.normal && (
-                  <img
-                    src={card.image_uris.normal}
-                    alt={card.name}
-                    style={{ width: "50%" }}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-
-        <Button variant="primary" onClick={handleEditSearch}>
-          Edit Search
-        </Button>
-      </div>
+          ))}
+        </ColorPercentageSection>
+      )}
     </MainContainer>
   );
 };

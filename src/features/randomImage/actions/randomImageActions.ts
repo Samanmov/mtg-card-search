@@ -1,9 +1,10 @@
 import { ImageActionTypes } from "../model/ImageActionTypes";
 import { AppDispatch } from "../../../store";
+import { Card } from "../../cardSearch/model/Card";
 
-export const setRandomImage = (imageUrl: string | null) => ({
+export const setRandomImage = (imageCard: Card) => ({
   type: ImageActionTypes.SET_RANDOM_IMAGE,
-  payload: imageUrl,
+  payload: imageCard,
 });
 
 export const setRandomImageLoading = () => ({
@@ -24,8 +25,7 @@ export const fetchRandomImage = () => async (dispatch: AppDispatch) => {
   try {
     const response = await fetch("https://api.scryfall.com/cards/random");
     const data = await response.json();
-    const imageUrl = data.image_uris?.normal || null;
-    dispatch(setRandomImage(imageUrl));
+    dispatch(setRandomImage(data));
     dispatch(setRandomImageSuccess());
   } catch (error) {
     console.error("Error fetching random image:", error);
