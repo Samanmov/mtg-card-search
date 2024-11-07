@@ -11,6 +11,7 @@ export interface CardsState {
   };
   generatedCard: Card | undefined;
   similarCards: Card[];
+  colorPercentages: Record<string, number> | null;
   loading: boolean;
   error: string | null;
 }

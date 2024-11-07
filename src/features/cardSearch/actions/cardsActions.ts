@@ -3,6 +3,7 @@ import { AppDispatch } from "../../../store";
 import { RelatedCard } from "../model/RelatedCard";
 import { CardQuery } from "../model/CardQuery";
 import { Card } from "../model/Card";
+import { Colors } from "../model/Colors";
 
 export const setQuery = (query: CardQuery) => ({
   type: CardActionTypes.SET_QUERY,
@@ -28,6 +29,11 @@ export const fetchCardsFailure = (error: string) => ({
   payload: error,
 });
 
+export const setColorPercentages = (percentages: Record<string, number>) => ({
+  type: CardActionTypes.SET_COLOR_PERCENTAGES,
+  payload: percentages,
+});
+
 export const fetchCards =
   (query: CardQuery) => async (dispatch: AppDispatch) => {
     dispatch(fetchCardsRequest());
@@ -49,6 +55,25 @@ export const fetchCards =
       const generatedCard = data.data[0];
       dispatch(fetchCardsSuccess(generatedCard));
 
+      if (
+        generatedCard &&
+        generatedCard.color_identity &&
+        generatedCard.color_identity.length > 0
+      ) {
+        const colorCounts: Record<string, number> = {};
+        generatedCard.color_identity.forEach((color: Colors) => {
+          colorCounts[color] = (colorCounts[color] || 0) + 1;
+        });
+
+        const colorPercentages: Record<string, number> = {};
+        Object.keys(colorCounts).forEach((color) => {
+          colorPercentages[color] =
+            (colorCounts[color] / generatedCard.color_identity.length) * 100;
+        });
+
+        dispatch(setColorPercentages(colorPercentages));
+      }
+
       if (generatedCard && generatedCard.all_parts) {
         const relatedCardPromises = generatedCard.all_parts.map(
           async (part: RelatedCard) => {
@@ -57,7 +82,6 @@ export const fetchCards =
           },
         );
         const similarCards = await Promise.all(relatedCardPromises);
-
         dispatch(fetchRelatedCardsSuccess(similarCards));
       }
     } catch (error) {
