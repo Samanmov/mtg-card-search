@@ -61,7 +61,7 @@ export const SearchResultsContainer: FC = () => {
             {Object.entries(colorPercentages).map(([color, percentage]) => (
               <ColorPercentageCircle
                 key={color}
-                color={color as Colors} // Ensure type compatibility
+                color={color as Colors}
                 percentage={Math.round(percentage)}
               />
             ))}
