@@ -1,9 +1,9 @@
 import React from "react";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import styled from "styled-components";
 import "react-loading-skeleton/dist/skeleton.css";
 import { palette } from "../../model/palette";
-import { Body1, Body2 } from "../component/Typography";
+import { Body1 } from "../component/Typography";
 
 interface ImageWithLoadingProps {
   src: string | null;
@@ -12,11 +12,15 @@ interface ImageWithLoadingProps {
   height?: string;
   isLoading: boolean;
   error?: string | null;
+  enabledBgColor?: boolean;
+  margin?: string;
 }
 
 const ImageContainer = styled.div<{
   width?: string;
   height?: string;
+  enabledBgColor?: boolean;
+  margin?: string;
 }>`
   width: ${({ width }) => width || "100%"};
   height: ${({ height }) => height || "300px"};
@@ -25,7 +29,9 @@ const ImageContainer = styled.div<{
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-color: ${palette.disabled.light};
+  margin: ${({ margin }) => margin || "unset"};
+  background-color: ${({ enabledBgColor }) =>
+    enabledBgColor ? palette.disabled.light : "transparent"};
 `;
 
 const StyledImage = styled.img`
@@ -55,9 +61,16 @@ export const ImageWithLoading: React.FC<ImageWithLoadingProps> = ({
   height,
   isLoading,
   error,
+  enabledBgColor = true,
+  margin,
 }) => {
   return (
-    <ImageContainer width={width} height={height}>
+    <ImageContainer
+      width={width}
+      height={height}
+      margin={margin}
+      enabledBgColor={enabledBgColor}
+    >
       {isLoading ? (
         <Skeleton width="100%" height="100%" />
       ) : error || !src ? (

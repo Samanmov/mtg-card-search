@@ -9,6 +9,8 @@ import {
   setQuery,
 } from "../actions/cardsActions";
 import { Path } from "../../../Path";
+import { useEffect, useState } from "react";
+import { isObjectsEqual } from "../../../common/util/isObjectsEqual";
 
 export const initialValues: FormValues = {
   cardName: "",
@@ -21,12 +23,14 @@ export const initialValues: FormValues = {
 
 type Out = {
   formik: FormikProps<FormValues>;
+  isModified: boolean;
 };
 
 export const useCardSearchForm = (): Out => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const location = useLocation();
+  const [isModified, setIsModified] = useState(false);
 
   const formik = useFormik<FormValues>({
     initialValues: (location.state as FormValues) || initialValues,
@@ -40,7 +44,6 @@ export const useCardSearchForm = (): Out => {
       }
       return errors;
     },
-
     onSubmit: (values) => {
       dispatch(setQuery(values));
       dispatch(fetchCards(values));
@@ -49,7 +52,12 @@ export const useCardSearchForm = (): Out => {
     },
   });
 
+  useEffect(() => {
+    setIsModified(!isObjectsEqual(formik.values, initialValues));
+  }, [formik.values, initialValues]);
+
   return {
     formik,
+    isModified,
   };
 };

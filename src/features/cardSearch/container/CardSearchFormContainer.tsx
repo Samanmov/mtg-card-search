@@ -14,7 +14,7 @@ import { initialValues, useCardSearchForm } from "../hook/useCardSearchForm";
 import { CardType } from "../model/CardType";
 
 export const CardSearchFormContainer: React.FC = () => {
-  const { formik } = useCardSearchForm();
+  const { formik, isModified } = useCardSearchForm();
 
   return (
     <MainContainer>
@@ -104,6 +104,7 @@ export const CardSearchFormContainer: React.FC = () => {
             <Button
               variant="secondary"
               type="button"
+              disabled={!isModified}
               onClick={(): void => formik.resetForm({ values: initialValues })}
             >
               Clear
