@@ -1,18 +1,14 @@
-import React, { FC, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { FC } from "react";
 import styled from "styled-components";
-import { Path } from "../../../Path";
 import { NotFoundContainer } from "./NotFoundContainer";
 import { LoadingSpinner } from "../../../common/ui/container/LoadingSpinner";
 import { Button } from "../../../common/ui/component/Button";
-import { AppDispatch, RootState } from "../../../store";
-import { setQuery } from "../../cardSearch/actions/cardsActions";
 import { Colors } from "../../cardSearch/model/Colors";
 import { ColorPercentageCircle } from "../../../common/ui/component/ColorPercentageCircle";
 import { CardContent } from "../../../common/ui/component/CardContent";
 import { CardNavigator } from "../../../common/ui/component/CardNavigator";
 import { MainContainer } from "../../../common/ui/container/MainContainer";
+import { useSearchResults } from "../hook/useSearchResults";
 
 const CardSection = styled.div`
   display: flex;
@@ -31,22 +27,14 @@ const ColorPercentageSection = styled.div`
 `;
 
 export const SearchResultsContainer: FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
   const {
-    generatedCard,
-    similarCards,
     loading,
-    error,
-    query,
     colorPercentages,
-  } = useSelector((state: RootState) => state.cards);
-  const memoizedQuery = useMemo(() => query, [query]);
-
-  const handleEditSearch = () => {
-    dispatch(setQuery(memoizedQuery));
-    navigate(Path.SEARCH, { state: { ...memoizedQuery } });
-  };
+    handleEditSearch,
+    similarCards,
+    generatedCard,
+    error,
+  } = useSearchResults();
 
   if (loading) return <LoadingSpinner />;
   if (error || (!generatedCard && similarCards.length === 0)) {

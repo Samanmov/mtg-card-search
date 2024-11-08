@@ -1,58 +1,20 @@
 import React from "react";
-import { useFormik, FormikErrors } from "formik";
-import { useNavigate, useLocation } from "react-router-dom";
-import { Path } from "../../../Path";
 import { Button } from "../../../common/ui/component/Button";
 import { Input } from "../../../common/ui/component/Input";
 import { MainContainer } from "../../../common/ui/container/MainContainer";
 import { CardContainer } from "../../../common/ui/container/CardContainer";
 import { Select } from "../../../common/ui/component/Select";
 import { ButtonToolbar } from "../../../common/ui/component/ButtonToolbar";
-import { FormValues } from "../model/FormValues";
-import { AppDispatch } from "../../../store";
-import { useDispatch } from "react-redux";
-import {
-  fetchCards,
-  fetchRelatedCardsSuccess,
-  setQuery,
-} from "../actions/cardsActions";
 import { RandomImageContainer } from "../../randomImage/container/RandomImageContainer";
 import {
   GridContainer,
   GridItem,
 } from "../../../common/ui/container/GridContainer";
-
-const initialValues: FormValues = {
-  cardName: "",
-  cardType: "",
-  cardCost: "",
-  description: "",
-  power: "",
-  toughness: "",
-};
+import { initialValues, useCardSearchForm } from "../hook/useCardSearchForm";
+import { CardType } from "../model/CardType";
 
 export const CardSearchFormContainer: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const formik = useFormik<FormValues>({
-    initialValues: (location.state as FormValues) || initialValues,
-    validate: (values) => {
-      const errors: FormikErrors<FormValues> = {};
-      if (!values.cardName) {
-        errors.cardName = "Card name is required";
-      }
-
-      return errors;
-    },
-    onSubmit: (values) => {
-      dispatch(setQuery(values));
-      dispatch(fetchCards(values));
-      dispatch(fetchRelatedCardsSuccess([]));
-      navigate(Path.RESULTS);
-    },
-  });
+  const { formik } = useCardSearchForm();
 
   return (
     <MainContainer>
@@ -62,7 +24,7 @@ export const CardSearchFormContainer: React.FC = () => {
             type="text"
             name="cardName"
             id="cardName"
-            label="Card Name*"
+            label="Card Name *"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.cardName}
@@ -75,13 +37,13 @@ export const CardSearchFormContainer: React.FC = () => {
                 id="cardType"
                 onChange={formik.handleChange}
                 value={formik.values.cardType}
-                defaultValue=""
               >
                 <option value="">No value</option>
-                <option value="creature">Creature</option>
-                <option value="enchantment">Enchantment</option>
-                <option value="instant">Instant</option>
-                <option value="sorcery">Sorcery</option>
+                {Object.values(CardType).map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
               </Select>
             </GridItem>
             <GridItem span={6}>
@@ -105,6 +67,7 @@ export const CardSearchFormContainer: React.FC = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.description}
+            error={formik.errors.description}
           />
           <GridContainer cols={12}>
             <GridItem span={6}>

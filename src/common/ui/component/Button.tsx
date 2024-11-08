@@ -8,7 +8,9 @@ type ButtonProps = {
   disabled?: boolean;
 };
 
-export const Button = styled.button<ButtonProps>`
+export const Button = styled.button.withConfig({
+  shouldForwardProp: (prop) => !["variant"].includes(prop),
+})<ButtonProps>`
   padding: 10px 20px;
   font-size: 1rem;
   border-radius: 20px;

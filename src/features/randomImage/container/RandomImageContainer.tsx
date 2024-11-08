@@ -1,26 +1,11 @@
-import React, { useEffect } from "react";
 import { ButtonToolbar } from "../../../common/ui/component/ButtonToolbar";
 import { Button } from "../../../common/ui/component/Button";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store";
-import { fetchRandomImage } from "../actions/randomImageActions";
 import { ImageWithLoading } from "../../../common/ui/container/ImageWithPlaceholder";
+import { useRandomImage } from "../hook/useRandomImage";
+import { FC } from "react";
 
-export const RandomImageContainer = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { imageCard, loading, error } = useSelector(
-    (state: RootState) => state.randomImage,
-  );
-
-  useEffect(() => {
-    if (!imageCard) {
-      dispatch(fetchRandomImage());
-    }
-  }, [dispatch, imageCard]);
-
-  const handleNewImage = () => {
-    dispatch(fetchRandomImage());
-  };
+export const RandomImageContainer: FC = () => {
+  const { imageCard, handleNewImage, isLoading, error } = useRandomImage();
 
   return (
     <>
@@ -31,7 +16,7 @@ export const RandomImageContainer = () => {
             alt={imageCard.name}
             width="218px"
             height="303px"
-            isLoading={loading}
+            isLoading={isLoading}
             error={error}
           />
 
