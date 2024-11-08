@@ -3,7 +3,7 @@ import { palette } from "../../model/palette";
 
 export const H2 = styled.h2`
   font-size: 1.5rem;
-  margin: 5px 0;
+  margin: 15px 0;
   font-optical-sizing: auto;
   font-style: normal;
 `;
