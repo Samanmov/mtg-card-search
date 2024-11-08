@@ -70,9 +70,7 @@ export const CardSearchFormContainer: React.FC = () => {
             value={formik.values.cardType}
             defaultValue=""
           >
-            <option disabled value="">
-              Select Type
-            </option>
+            <option value="">No value</option>
             <option value="creature">Creature</option>
             <option value="enchantment">Enchantment</option>
             <option value="instant">Instant</option>

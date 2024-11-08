@@ -2,6 +2,7 @@ import React, { FC, ReactNode } from "react";
 import styled from "styled-components";
 import { ImageWithLoading } from "../container/ImageWithPlaceholder";
 import { palette } from "../../model/palette";
+import { Body2, H3, H4 } from "./Typography";
 
 type CardContentProps = {
   title: string;
@@ -34,9 +35,9 @@ export const CardContent: FC<CardContentProps> = ({
 }) => {
   return (
     <CardStyle>
-      <h2>{title}</h2>
-      <h3>{name}</h3>
-      <p>{type}</p>
+      <H3>{title}</H3>
+      <H4>{name}</H4>
+      <Body2>{type}</Body2>
       <ImageWithLoading
         src={src}
         alt={`Image of ${name}`}

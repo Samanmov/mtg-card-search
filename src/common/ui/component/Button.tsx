@@ -1,15 +1,17 @@
 import styled, { css } from "styled-components";
 import { palette } from "../../model/palette";
 
+type Variant = "primary" | "secondary";
+
 type ButtonProps = {
-  variant?: "primary" | "secondary";
+  variant?: Variant;
   disabled?: boolean;
 };
 
 export const Button = styled.button<ButtonProps>`
   padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
+  font-size: 1rem;
+  border-radius: 20px;
   cursor: pointer;
   border: none;
   transition:

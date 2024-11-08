@@ -3,6 +3,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import styled from "styled-components";
 import "react-loading-skeleton/dist/skeleton.css";
 import { palette } from "../../model/palette";
+import { Body1, Body2 } from "../component/Typography";
 
 interface ImageWithLoadingProps {
   src: string | null;
@@ -61,7 +62,7 @@ export const ImageWithLoading: React.FC<ImageWithLoadingProps> = ({
         <Skeleton width="100%" height="100%" />
       ) : error || !src ? (
         <Placeholder aria-label={alt || "Placeholder image"}>
-          No image found
+          <Body1>No image found</Body1>
         </Placeholder>
       ) : (
         <StyledImage src={src} alt={alt || "Loaded image"} />

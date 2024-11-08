@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import styled, { css } from "styled-components";
 import { palette } from "../../../common/model/palette";
 import { Colors } from "../../../features/cardSearch/model/Colors";
@@ -31,7 +31,7 @@ interface ColorPercentageCircleProps {
   percentage: number;
 }
 
-export const ColorPercentageCircle: React.FC<ColorPercentageCircleProps> = ({
+export const ColorPercentageCircle: FC<ColorPercentageCircleProps> = ({
   color,
   percentage,
 }) => {
