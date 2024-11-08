@@ -41,6 +41,10 @@ export const StyledInput = styled.input<InputProps>`
     error &&
     css`
       border-color: ${palette.error.main};
+      &:focus {
+        border-color: ${palette.error.main};
+        outline: none;
+      }
     `}
 `;
 

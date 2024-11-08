@@ -45,7 +45,7 @@ export const CardContent: FC<CardContentProps> = ({
         width="347px"
         isLoading={isLoading}
       />
-      {action && <div style={{ marginTop: "20px" }}>{action}</div>}
+      {action && <div style={{ margin: "20px 0" }}>{action}</div>}
     </CardStyle>
   );
 };

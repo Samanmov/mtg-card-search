@@ -17,6 +17,10 @@ import {
   setQuery,
 } from "../actions/cardsActions";
 import { RandomImageContainer } from "../../randomImage/container/RandomImageContainer";
+import {
+  GridContainer,
+  GridItem,
+} from "../../../common/ui/container/GridContainer";
 
 const initialValues: FormValues = {
   cardName: "",
@@ -39,6 +43,7 @@ export const CardSearchFormContainer: React.FC = () => {
       if (!values.cardName) {
         errors.cardName = "Card name is required";
       }
+
       return errors;
     },
     onSubmit: (values) => {
@@ -63,28 +68,34 @@ export const CardSearchFormContainer: React.FC = () => {
             value={formik.values.cardName}
             error={formik.errors.cardName}
           />
-          <Select
-            label="Select Type"
-            id="cardType"
-            onChange={formik.handleChange}
-            value={formik.values.cardType}
-            defaultValue=""
-          >
-            <option value="">No value</option>
-            <option value="creature">Creature</option>
-            <option value="enchantment">Enchantment</option>
-            <option value="instant">Instant</option>
-            <option value="sorcery">Sorcery</option>
-          </Select>
-          <Input
-            type="number"
-            name="cardCost"
-            id="cardCost"
-            label="Cost"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.cardCost}
-          />
+          <GridContainer cols={12}>
+            <GridItem span={6}>
+              <Select
+                label="Select Type"
+                id="cardType"
+                onChange={formik.handleChange}
+                value={formik.values.cardType}
+                defaultValue=""
+              >
+                <option value="">No value</option>
+                <option value="creature">Creature</option>
+                <option value="enchantment">Enchantment</option>
+                <option value="instant">Instant</option>
+                <option value="sorcery">Sorcery</option>
+              </Select>
+            </GridItem>
+            <GridItem span={6}>
+              <Input
+                type="number"
+                name="cardCost"
+                id="cardCost"
+                label="Cost"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.cardCost}
+              />
+            </GridItem>
+          </GridContainer>
           <RandomImageContainer />
           <Input
             type="text"
@@ -95,24 +106,30 @@ export const CardSearchFormContainer: React.FC = () => {
             onBlur={formik.handleBlur}
             value={formik.values.description}
           />
-          <Input
-            type="number"
-            name="power"
-            id="power"
-            label="Power"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.power}
-          />
-          <Input
-            type="text"
-            name="toughness"
-            id="toughness"
-            label="Toughness"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.toughness}
-          />
+          <GridContainer cols={12}>
+            <GridItem span={6}>
+              <Input
+                type="number"
+                name="power"
+                id="power"
+                label="Power"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.power}
+              />
+            </GridItem>
+            <GridItem span={6}>
+              <Input
+                type="number"
+                name="toughness"
+                id="toughness"
+                label="Toughness"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.toughness}
+              />
+            </GridItem>
+          </GridContainer>
           <ButtonToolbar>
             <Button
               variant="primary"
