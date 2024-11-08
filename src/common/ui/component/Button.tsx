@@ -32,23 +32,32 @@ export const Button = styled.button.withConfig({
   ${({ variant }) =>
     variant === "secondary" &&
     css`
-      background-color: transparent;
       color: ${palette.primary.main};
       outline: 2px solid ${palette.primary.main};
       &:hover {
         background-color: ${palette.primary.light};
-        border-color: ${palette.primary.dark};
       }
     `}
   
-  ${({ disabled }) =>
+  ${({ disabled, variant }) =>
     disabled &&
     css`
       background-color: ${palette.disabled.light};
       color: ${palette.disabled.main};
-      cursor: not-allowed;
-      &:hover {
-        background-color: ${palette.disabled.light};
-      }
+      cursor: unset;
+      ${variant === "secondary" &&
+      css`
+        outline-color: ${palette.disabled.main};
+        background-color: ${palette.gray.light};
+        &:hover {
+          background-color: ${palette.gray.light};
+        }
+      `}
+      ${variant === "primary" &&
+      css`
+        &:hover {
+          background-color: ${palette.disabled.light};
+        }
+      `}
     `}
 `;
