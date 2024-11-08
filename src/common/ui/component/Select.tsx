@@ -26,6 +26,10 @@ const StyledSelect = styled.select<SelectProps>`
     error &&
     css`
       border-color: ${palette.error.main};
+      &:focus {
+        border-color: ${palette.error.main};
+        outline: none;
+      }
     `}
 `;
 
