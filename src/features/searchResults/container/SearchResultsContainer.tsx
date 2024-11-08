@@ -20,8 +20,7 @@ const CardSection = styled.div`
 const ColorPercentageSection = styled.div`
   display: flex;
   gap: 10px;
-  margin-top: 20px;
-  margin-bottom: 30px;
+  padding: 30px 0;
   justify-content: center;
   align-items: center;
 `;

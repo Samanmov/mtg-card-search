@@ -23,7 +23,7 @@ const ColorCircle = styled.div<{ $bgColor: string; $textColor: string }>`
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 0.85rem;
 `;
 
 interface ColorPercentageCircleProps {

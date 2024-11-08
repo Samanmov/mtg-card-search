@@ -7,6 +7,7 @@ import { Card } from "../../../features/cardSearch/model/Card";
 const NavigationContainer = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 const Container = styled.div`
